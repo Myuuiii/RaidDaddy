@@ -24,7 +24,7 @@ namespace RaidDaddy.Modules
 			{
 				Program._data.CurrentRaid = null;
 				Program._data.Save("./data.json");
-				await ReplyAsync("Raid has been ended.");
+				await ReplyAsync("Raid fireteam has been disbanded.");
 			}
 		}
 
@@ -117,13 +117,6 @@ namespace RaidDaddy.Modules
 				StringBuilder sbDescription = new StringBuilder();
 				sbDescription.AppendLine($"**Notes:** {raid.Notes}");
 				sbDescription.AppendLine($"**Players:** {raid.UserIds.Count}/6");
-				sbDescription.AppendLine("");
-				sbDescription.AppendLine("**Possible Commands**");
-				sbDescription.AppendLine($"Join Raid: `{Program._config.Prefix}join`");
-				sbDescription.AppendLine($"Leave Raid: `{Program._config.Prefix}leave`");
-				sbDescription.AppendLine($"End Raid: `{Program._config.Prefix}end`");
-				sbDescription.AppendLine($"Change Raid: `{Program._config.Prefix}setraid <raidName (VOG/DSC/LW/GOS)>`");
-				sbDescription.AppendLine($"Change Notes: `{Program._config.Prefix}setnotes <new notes>`");
 
 				builder.WithDescription(sbDescription.ToString());
 				builder.WithThumbnailUrl("http://cdn.mutedevs.nl/d2raid.png");
