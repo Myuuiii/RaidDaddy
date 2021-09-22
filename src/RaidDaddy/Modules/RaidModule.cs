@@ -98,19 +98,19 @@ namespace RaidDaddy.Modules
 				{
 					case Raid.LW:
 						builder.WithTitle("Last Wish Raid");
-						builder.WithColor(Color.DarkMagenta);
+						builder.WithColor(new Color(248, 185, 255));
 						break;
 					case Raid.GOS:
 						builder.WithTitle("Garden of Salvation Raid");
-						builder.WithColor(Color.DarkGreen);
+						builder.WithColor(new Color(81, 170, 100));
 						break;
 					case Raid.DSC:
 						builder.WithTitle("Deep Stone Crypt Raid");
-						builder.WithColor(Color.DarkBlue);
+						builder.WithColor(new Color(44, 41, 111));
 						break;
 					case Raid.VOG:
 						builder.WithTitle("Vault of Glass Raid");
-						builder.WithColor(Color.DarkOrange);
+						builder.WithColor(new Color(110, 195, 255));
 						break;
 				}
 
