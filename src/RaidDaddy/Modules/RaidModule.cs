@@ -15,10 +15,6 @@ namespace RaidDaddy.Modules
 		[Command("create")]
 		public async Task CreateRaid(Raid raid, [Remainder] string notes = "No Notes")
 		{
-			var guild = (SocketGuild)Context.Guild;
-			foreach (var member in guild.Users.Where(x => x.Roles.Any(y => y.Id == Program._config.RoleId)))
-				await member.RemoveRoleAsync(Program._config.RoleId);
-
 			Program._data.CurrentRaid = new RaidData(raid, notes);
 			Program._data.Save("./data.json");
 			await ReplyAsync($"A new {raid} raid has been created. You can join it by executing `{Program._config.Prefix}join`");
@@ -29,10 +25,6 @@ namespace RaidDaddy.Modules
 		{
 			if (Program._data.CurrentRaid != null)
 			{
-				var guild = (SocketGuild)Context.Guild;
-				foreach (var member in guild.Users.Where(x => x.Roles.Any(y => y.Id == Program._config.RoleId)))
-					await member.RemoveRoleAsync(Program._config.RoleId);
-
 				Program._data.CurrentRaid = null;
 				Program._data.Save("./data.json");
 				await ReplyAsync("Raid fireteam has been disbanded.");
@@ -57,7 +49,7 @@ namespace RaidDaddy.Modules
 				{
 					if (raid.UserIds.Count < 6)
 					{
-						Program._data.CurrentRaid.Join(Context.User as SocketGuildUser, Program._config.RoleId);
+						Program._data.CurrentRaid.Join(Context.User as SocketGuildUser);
 						Program._data.Save("./data.json");
 						await ReplyAsync($"{Context.User.Mention} has joined the raid.");
 					}
@@ -85,7 +77,7 @@ namespace RaidDaddy.Modules
 				}
 				else
 				{
-					Program._data.CurrentRaid.Leave(Context.User as SocketGuildUser, Program._config.RoleId);
+					Program._data.CurrentRaid.Leave(Context.User as SocketGuildUser);
 					Program._data.Save("./data.json");
 					await ReplyAsync($"{Context.User.Mention} has left the raid.");
 				}
