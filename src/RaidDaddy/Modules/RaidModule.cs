@@ -214,7 +214,10 @@ namespace RaidDaddy.Modules
 			StringBuilder sb = new StringBuilder();
 			int i = 0;
 			foreach (string quote in Program._data.Quotes)
-				sb.AppendLine($"{i} - {quote}");
+			{
+				sb.AppendLine($"**{i}** - {quote}");
+				i++;
+			}
 
 			if (!string.IsNullOrWhiteSpace(sb.ToString()))
 			{
