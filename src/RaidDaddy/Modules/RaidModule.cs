@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Discord;
@@ -12,6 +15,10 @@ namespace RaidDaddy.Modules
 		[Command("create")]
 		public async Task CreateRaid(Raid raid, [Remainder] string notes = "No Notes")
 		{
+			var guild = (SocketGuild)Context.Guild;
+			foreach (var member in guild.Users.Where(x => x.Roles.Any(y => y.Id == Program._config.RoleId)))
+				await member.RemoveRoleAsync(Program._config.RoleId);
+
 			Program._data.CurrentRaid = new RaidData(raid, notes);
 			Program._data.Save("./data.json");
 			await ReplyAsync($"A new {raid} raid has been created. You can join it by executing `{Program._config.Prefix}join`");
@@ -22,6 +29,10 @@ namespace RaidDaddy.Modules
 		{
 			if (Program._data.CurrentRaid != null)
 			{
+				var guild = (SocketGuild)Context.Guild;
+				foreach (var member in guild.Users.Where(x => x.Roles.Any(y => y.Id == Program._config.RoleId)))
+					await member.RemoveRoleAsync(Program._config.RoleId);
+
 				Program._data.CurrentRaid = null;
 				Program._data.Save("./data.json");
 				await ReplyAsync("Raid fireteam has been disbanded.");
@@ -176,6 +187,19 @@ namespace RaidDaddy.Modules
 			await ReplyAsync($"The role has been set to `{role.Name}`");
 		}
 
+		[Command("start")]
+		public async Task StartRaid()
+		{
+			if (Program._data.CurrentRaid == null)
+			{
+				await ReplyAsync("There is no raid currently running.");
+			}
+			else
+			{
+				await ReplyAsync(Program._data.Quotes[new Random().Next(Program._data.Quotes.Count)] + $" ||<@&{Program._config.RoleId}>||");
+			}
+		}
+
 		[Command("help")]
 		public async Task Help()
 		{
@@ -194,6 +218,7 @@ namespace RaidDaddy.Modules
 			sb.AppendLine($"`{Program._config.Prefix}setnotes <new notes>` - Sets the notes");
 			sb.AppendLine($"`{Program._config.Prefix}setraid <raidName (VOG/DSC/LW/GOS)>` - Sets the raid");
 			sb.AppendLine($"`{Program._config.Prefix}setrole <role name/id>` - Sets the role");
+			sb.AppendLine($"`{Program._config.Prefix}start` - Pings the raid role notifying the start of the raid");
 			builder.WithDescription(sb.ToString());
 			builder.WithImageUrl("http://cdn.mutedevs.nl/PerfectedEntropy.png");
 			await ReplyAsync(null, false, builder.Build());

@@ -21,6 +21,8 @@ namespace RaidDaddy
 			_client = new DiscordSocketClient();
 			_config = Functions.ConfigLoader.LoadBotConfig("./config.json");
 			_data = Functions.DataLoader.LoadData("./data.json");
+			_config.Save("./config.json");
+			_data.Save("./data.json");
 
 			await _client.LoginAsync(Discord.TokenType.Bot, _config.BotToken);
 			await _client.StartAsync();
