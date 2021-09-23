@@ -200,6 +200,47 @@ namespace RaidDaddy.Modules
 			}
 		}
 
+		[Command("addquote")]
+		public async Task AddQuote([Remainder] string quote)
+		{
+			Program._data.Quotes.Add(quote);
+			Program._data.Save("./data.json");
+			await ReplyAsync("The quote has been added");
+		}
+
+		[Command("quotes")]
+		public async Task Quotes()
+		{
+			StringBuilder sb = new StringBuilder();
+			int i = 0;
+			foreach (string quote in Program._data.Quotes)
+				sb.AppendLine($"{i} - {quote}");
+
+			if (!string.IsNullOrWhiteSpace(sb.ToString()))
+			{
+				await ReplyAsync(sb.ToString());
+			}
+			else
+			{
+				await ReplyAsync("There are no quotes.");
+			}
+		}
+
+		[Command("removequote")]
+		public async Task RemoveQuote(int index)
+		{
+			if (index >= 0 && index < Program._data.Quotes.Count)
+			{
+				Program._data.Quotes.RemoveAt(index);
+				Program._data.Save("./data.json");
+				await ReplyAsync("The quote has been removed");
+			}
+			else
+			{
+				await ReplyAsync("There is no quote at that index.");
+			}
+		}
+
 		[Command("help")]
 		public async Task Help()
 		{
@@ -219,6 +260,10 @@ namespace RaidDaddy.Modules
 			sb.AppendLine($"`{Program._config.Prefix}setraid <raidName (VOG/DSC/LW/GOS)>` - Sets the raid");
 			sb.AppendLine($"`{Program._config.Prefix}setrole <role name/id>` - Sets the role");
 			sb.AppendLine($"`{Program._config.Prefix}start` - Pings the raid role notifying the start of the raid");
+			sb.AppendLine($"");
+			sb.AppendLine($"`{Program._config.Prefix}addquote <quote>` - Add a new quote");
+			sb.AppendLine($"`{Program._config.Prefix}quotes` - List all the quites");
+			sb.AppendLine($"`{Program._config.Prefix}removequote <quote index>` - Remove a quote");
 			builder.WithDescription(sb.ToString());
 			builder.WithImageUrl("http://cdn.mutedevs.nl/PerfectedEntropy.png");
 			await ReplyAsync(null, false, builder.Build());
