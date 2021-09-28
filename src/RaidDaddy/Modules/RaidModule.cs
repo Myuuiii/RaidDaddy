@@ -17,6 +17,7 @@ namespace RaidDaddy.Modules
 		{
 			Program._data.CurrentRaid = new RaidData(raid, notes);
 			Program._data.Save("./data.json");
+			await ReplyAsync(Program._data.Quotes[new Random().Next(Program._data.Quotes.Count)] + $"<@&{Program._config.RoleId}>");
 			await ReplyAsync($"A new {raid} raid has been created. You can join it by executing `{Program._config.Prefix}join`");
 		}
 
@@ -188,7 +189,7 @@ namespace RaidDaddy.Modules
 			}
 			else
 			{
-				await ReplyAsync(Program._data.Quotes[new Random().Next(Program._data.Quotes.Count)] + $" ||<@&{Program._config.RoleId}>||");
+				await ReplyAsync($"<@&{Program._config.RoleId}>. The raid is starting!");
 			}
 		}
 
