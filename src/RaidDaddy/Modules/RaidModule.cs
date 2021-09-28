@@ -52,11 +52,13 @@ namespace RaidDaddy.Modules
 					{
 						Program._data.CurrentRaid.Join(Context.User as SocketGuildUser);
 						Program._data.Save("./data.json");
-						await ReplyAsync($"{Context.User.Mention} has joined the raid.");
+						await ReplyAsync($"{Context.User.Mention} has joined the raid. ({Program._data.CurrentRaid.UserIds.Count}/6)");
+						if (raid.UserIds.Count == 6)
+							await ReplyAsync("<@&{Program._config.RoleId}> The raid is full!", false, GetInfoEmbed(Program._data.CurrentRaid));
 					}
 					else
 					{
-						await ReplyAsync("The raid is full.");
+						await ReplyAsync("The raid is already full.");
 					}
 				}
 			}
@@ -80,7 +82,7 @@ namespace RaidDaddy.Modules
 				{
 					Program._data.CurrentRaid.Leave(Context.User as SocketGuildUser);
 					Program._data.Save("./data.json");
-					await ReplyAsync($"{Context.User.Mention} has left the raid.");
+					await ReplyAsync($"{Context.User.Mention} has left the raid. ({Program._data.CurrentRaid.UserIds.Count}/6)");
 				}
 			}
 		}
@@ -94,51 +96,7 @@ namespace RaidDaddy.Modules
 			}
 			else
 			{
-				RaidData raid = Program._data.CurrentRaid;
-
-				EmbedBuilder builder = new EmbedBuilder();
-
-				switch (raid.Raid)
-				{
-					case Raid.LW:
-						builder.WithTitle("Last Wish Raid");
-						builder.WithColor(new Color(248, 185, 255));
-						break;
-					case Raid.GOS:
-						builder.WithTitle("Garden of Salvation Raid");
-						builder.WithColor(new Color(81, 170, 100));
-						break;
-					case Raid.DSC:
-						builder.WithTitle("Deep Stone Crypt Raid");
-						builder.WithColor(new Color(44, 41, 111));
-						break;
-					case Raid.VOG:
-						builder.WithTitle("Vault of Glass Raid");
-						builder.WithColor(new Color(110, 195, 255));
-						break;
-				}
-
-				StringBuilder sbDescription = new StringBuilder();
-				sbDescription.AppendLine($"**Notes:** {raid.Notes}");
-				sbDescription.AppendLine($"**Players:** {raid.UserIds.Count}/6");
-
-				builder.WithDescription(sbDescription.ToString());
-				builder.WithThumbnailUrl("http://cdn.mutedevs.nl/d2raid.png");
-				builder.WithImageUrl("http://cdn.mutedevs.nl/PerfectedEntropy.png");
-
-				StringBuilder sb = new StringBuilder();
-				foreach (string userName in raid.UserNames)
-					sb.AppendLine($"- {userName}");
-
-				if (!string.IsNullOrWhiteSpace(sb.ToString()))
-				{
-					builder.AddField("Fireteam", sb.ToString());
-				}
-				else
-				{
-					builder.AddField("Fireteam", "-- Empty --");
-				}
-				await ReplyAsync("", false, builder.Build());
+				await ReplyAsync("", false, GetInfoEmbed(Program._data.CurrentRaid));
 			}
 		}
 
@@ -263,6 +221,55 @@ namespace RaidDaddy.Modules
 			builder.WithDescription(sb.ToString());
 			builder.WithImageUrl("http://cdn.mutedevs.nl/PerfectedEntropy.png");
 			await ReplyAsync(null, false, builder.Build());
+		}
+
+
+		static Embed GetInfoEmbed(RaidData raid)
+		{
+			EmbedBuilder builder = new EmbedBuilder();
+
+			switch (raid.Raid)
+			{
+				case Raid.LW:
+					builder.WithTitle("Last Wish Raid");
+					builder.WithColor(new Color(248, 185, 255));
+					break;
+				case Raid.GOS:
+					builder.WithTitle("Garden of Salvation Raid");
+					builder.WithColor(new Color(81, 170, 100));
+					break;
+				case Raid.DSC:
+					builder.WithTitle("Deep Stone Crypt Raid");
+					builder.WithColor(new Color(44, 41, 111));
+					break;
+				case Raid.VOG:
+					builder.WithTitle("Vault of Glass Raid");
+					builder.WithColor(new Color(110, 195, 255));
+					break;
+			}
+
+			StringBuilder sbDescription = new StringBuilder();
+			sbDescription.AppendLine($"**Notes:** {raid.Notes}");
+			sbDescription.AppendLine($"**Players:** {raid.UserIds.Count}/6");
+
+			builder.WithDescription(sbDescription.ToString());
+			builder.WithThumbnailUrl("http://cdn.mutedevs.nl/d2raid.png");
+			builder.WithImageUrl("http://cdn.mutedevs.nl/PerfectedEntropy.png");
+
+			StringBuilder sb = new StringBuilder();
+			foreach (string userName in raid.UserNames)
+				sb.AppendLine($"- {userName}");
+
+			if (!string.IsNullOrWhiteSpace(sb.ToString()))
+			{
+				builder.AddField("Fireteam", sb.ToString());
+			}
+			else
+			{
+				builder.AddField("Fireteam", "-- Empty --");
+			}
+
+			return builder.Build();
 		}
 	}
 }
