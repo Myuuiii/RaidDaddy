@@ -16,6 +16,7 @@ namespace RaidDaddy.Modules
 		public async Task CreateRaid(Raid raid, [Remainder] string notes = "No Notes")
 		{
 			Program._data.CurrentRaid = new RaidData(raid, notes);
+			Program._data.CurrentRaid.Join(Context.User as SocketGuildUser);
 			Program._data.Save("./data.json");
 			await ReplyAsync(Program._data.Quotes[new Random().Next(Program._data.Quotes.Count)] + $"<@&{Program._config.RoleId}>");
 			await ReplyAsync($"A new {raid} raid has been created. You can join it by executing `{Program._config.Prefix}join`");
