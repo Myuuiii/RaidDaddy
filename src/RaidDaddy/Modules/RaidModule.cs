@@ -220,7 +220,7 @@ namespace RaidDaddy.Modules
 			sb.AppendLine($"`{Program._config.Prefix}quotes` - List all the quites");
 			sb.AppendLine($"`{Program._config.Prefix}removequote <quote index>` - Remove a quote");
 			builder.WithDescription(sb.ToString());
-			builder.WithImageUrl("http://cdn.mutedevs.nl/PerfectedEntropy.png");
+			builder.WithImageUrl("https://cdn.mutedevs.nl/projects/raiddaddy/clantext.png");
 			await ReplyAsync(null, false, builder.Build());
 		}
 
@@ -254,8 +254,8 @@ namespace RaidDaddy.Modules
 			sbDescription.AppendLine($"**Players:** {raid.UserIds.Count}/6");
 
 			builder.WithDescription(sbDescription.ToString());
-			builder.WithThumbnailUrl("http://cdn.mutedevs.nl/d2raid.png");
-			builder.WithImageUrl("http://cdn.mutedevs.nl/PerfectedEntropy.png");
+			builder.WithThumbnailUrl("https://cdn.mutedevs.nl/projects/raiddaddy/raidicon.png");
+			builder.WithImageUrl("https://cdn.mutedevs.nl/projects/raiddaddy/clantext.png");
 
 			StringBuilder sb = new StringBuilder();
 			foreach (string userName in raid.UserNames)
