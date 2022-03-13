@@ -247,6 +247,10 @@ namespace RaidDaddy.Modules
 					builder.WithTitle("Vault of Glass Raid");
 					builder.WithColor(new Color(110, 195, 255));
 					break;
+				case Raid.VOTD:
+					builder.WithTitle("Vow of the Disciple Raid");
+					builder.WithColor(new Color(66, 66, 66));
+					break;
 			}
 
 			StringBuilder sbDescription = new StringBuilder();

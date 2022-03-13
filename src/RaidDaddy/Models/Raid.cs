@@ -5,6 +5,7 @@ namespace RaidDaddy.Models
 		GOS,
 		VOG,
 		DSC,
-		LW
+		LW,
+		VOTD
 	}
 }
