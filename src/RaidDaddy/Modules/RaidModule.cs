@@ -55,7 +55,7 @@ namespace RaidDaddy.Modules
 						Program._data.Save("./data.json");
 						await ReplyAsync($"{Context.User.Mention} has joined the raid. ({Program._data.CurrentRaid.UserIds.Count}/6)");
 						if (raid.UserIds.Count == 6)
-							await ReplyAsync("<@&{Program._config.RoleId}> The raid is full!", false, GetInfoEmbed(Program._data.CurrentRaid));
+							await ReplyAsync($"<@&{Program._config.RoleId}> The raid is full!", false, GetInfoEmbed(Program._data.CurrentRaid));
 					}
 					else
 					{
@@ -63,6 +63,68 @@ namespace RaidDaddy.Modules
 					}
 				}
 			}
+		}
+
+		[Command("reserve")]
+		public async Task ReserveRaidSpot(SocketUser targetUser)
+		{
+			if (Context.User.Id != 233590493831757824 && Context.User.Id != 192495481241337857 && Context.User.Id != 190486065512054786)
+			{
+				await ReplyAsync("You do not have permission to execute this command. Only Radek, Venatrix and Myuu can.");
+				return;
+			}
+
+			if (Program._data.CurrentRaid == null)
+			{
+				await ReplyAsync("There is no raid currently running.");
+				return;
+			}
+
+			RaidData raid = Program._data.CurrentRaid;
+			if (raid.UserIds.Contains(targetUser.Id))
+			{
+				await ReplyAsync("This person is already in the raid fireteam.");
+				return;
+			}
+
+			if (raid.UserIds.Count == 6)
+			{
+				await ReplyAsync("The raid is already full.");
+				return;
+			}
+
+			Program._data.CurrentRaid.Join(targetUser as SocketGuildUser);
+			Program._data.Save("./data.json");
+			await ReplyAsync($"{targetUser.Mention} has been reserved a spot on the raid fireteam. ({Program._data.CurrentRaid.UserIds.Count}/6)");
+			if (raid.UserIds.Count == 6)
+				await ReplyAsync($"<@&{Program._config.RoleId}> The raid is full!", false, GetInfoEmbed(Program._data.CurrentRaid));
+		}
+
+		[Command("remove")]
+		public async Task RemoveFromFireteam(SocketUser targetUser)
+		{
+			if (Context.User.Id != 233590493831757824 && Context.User.Id != 192495481241337857 && Context.User.Id != 190486065512054786)
+			{
+				await ReplyAsync("You do not have permission to execute this command. Only Radek, Venatrix and Myuu can.");
+				return;
+			}
+
+			if (Program._data.CurrentRaid == null)
+			{
+				await ReplyAsync("These is no raid currently running.");
+				return;
+			}
+
+			RaidData raid = Program._data.CurrentRaid;
+			if (!raid.UserIds.Contains(targetUser.Id))
+			{
+				await ReplyAsync("This person is not in the raid fireteam.");
+				return;
+			}
+
+			Program._data.CurrentRaid.Leave(targetUser as SocketGuildUser);
+			Program._data.Save("./data.json");
+			await ReplyAsync($"{targetUser.Mention} has been removed from the raid fireteam by {Context.User.Mention}");
 		}
 
 		[Command("leave")]
