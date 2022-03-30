@@ -1,3 +1,3 @@
-<img src="https://github.com/Myuuiii/RaidDaddy/blob/main/RaidDaddy.Resources/RepoBanner.png?raw=true">
+<img src="./RaidDaddy.Resources/repoBanner.png">
 
 Discord bot created for Perfected Entropy.
