@@ -23,7 +23,7 @@ public class RaidModule : ModuleBase<SocketCommandContext>
 	/// <param name="raidName"></param>
 	/// <param name="encounterName"></param>
 	/// <returns></returns>
-	[Command("create")]
+	[Command("create"), Alias("c", "new")]
 	public async Task CreateRaid(string raidName, string encounterName = "")
 	{
 		Guild guild = _guildRepository.GetGuild(Context.Guild.Id);
@@ -67,7 +67,7 @@ public class RaidModule : ModuleBase<SocketCommandContext>
 	/// Disbands the raid
 	/// </summary>
 	/// <returns></returns>
-	[Command("disband")]
+	[Command("disband"), Alias("d", "end")]
 	public async Task DisbandRaid()
 	{
 		Guild guild = _guildRepository.GetGuild(Context.Guild.Id);
@@ -80,11 +80,11 @@ public class RaidModule : ModuleBase<SocketCommandContext>
 
 		Raid raid = _raidRepository.GetRaid(guild.Id);
 
-		if (raid.Creator != Context.User.Id)
-		{
-			await ReplyAsync(StaticValues.NotCreator);
-			return;
-		}
+		// if (raid.Creator != Context.User.Id)
+		// {
+		// 	await ReplyAsync(StaticValues.NotCreator);
+		// 	return;
+		// }
 
 		_raidRepository.DeleteRaid(raid.GuildId);
 		await ReplyAsync($"{guild.GetMention()} " + StaticValues.RaidDisbanded);
@@ -171,11 +171,11 @@ public class RaidModule : ModuleBase<SocketCommandContext>
 
 		Raid raid = _raidRepository.GetRaid(guild.Id);
 
-		if (!raid.IsCreator(Context.User.Id))
-		{
-			await ReplyAsync(StaticValues.NotCreator);
-			return;
-		}
+		// if (!raid.IsCreator(Context.User.Id))
+		// {
+		// 	await ReplyAsync(StaticValues.NotCreator);
+		// 	return;
+		// }
 
 		if (!raid.IsMember(Context.User.Id))
 		{
@@ -220,11 +220,11 @@ public class RaidModule : ModuleBase<SocketCommandContext>
 
 		Raid raid = _raidRepository.GetRaid(guild.Id);
 
-		if (!raid.IsCreator(Context.User.Id))
-		{
-			await ReplyAsync(StaticValues.NotCreator);
-			return;
-		}
+		// if (!raid.IsCreator(Context.User.Id))
+		// {
+		// 	await ReplyAsync(StaticValues.NotCreator);
+		// 	return;
+		// }
 
 		if (!raid.IsMember(Context.User.Id))
 		{

@@ -36,11 +36,11 @@ public class GuildSettingModule : ModuleBase<SocketCommandContext>
 
 		Raid raid = _raidRepository.GetRaid(guild.Id);
 
-		if (!raid.IsCreator(Context.User.Id))
-		{
-			await ReplyAsync(StaticValues.NotCreator);
-			return;
-		}
+		// if (!raid.IsCreator(Context.User.Id))
+		// {
+		// 	await ReplyAsync(StaticValues.NotCreator);
+		// 	return;
+		// }
 
 		switch (option)
 		{
