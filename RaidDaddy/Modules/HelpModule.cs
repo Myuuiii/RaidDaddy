@@ -26,7 +26,7 @@ public class HelpModule : ModuleBase<SocketCommandContext>
 		sb.AppendLine($"`{Bot._config.Prefix}info` - Lists all raids and encounters");
 		sb.AppendLine($"`{Bot._config.Prefix}reserve <user>` - Adds the given user to the raid");
 		sb.AppendLine($"`{Bot._config.Prefix}remove <user>` - Removes the given user from the raid");
-		sb.AppendLine($"`{Bot._config.Prefix}set <encounter/raid> <value>`  - Sets the raid/encounter for the currently running raid.");
+		sb.AppendLine($"`{Bot._config.Prefix}set <encounter/raid> <value>`  - Sets the raid/encounter for the currently running raid. All translations are 1 word, no spaces.");
 
 		embed.WithDescription(sb.ToString());
 		await ReplyAsync("", false, embed.Build());

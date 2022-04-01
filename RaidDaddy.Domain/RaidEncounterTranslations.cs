@@ -24,7 +24,7 @@ public static class RaidEncounterTranslations
 		new EncounterTranslation(Destiny2Raid.DeepStoneCrypt, Destiny2Encounter.DSC_SecurityBreach, "dsc_security", "security", "breach"),
 		new EncounterTranslation(Destiny2Raid.DeepStoneCrypt, Destiny2Encounter.DSC_Atraks, "dsc_atraks", "atraks"),
 		new EncounterTranslation(Destiny2Raid.DeepStoneCrypt, Destiny2Encounter.DSC_SpaceWalk, "dsc_spacewalk", "spacewalk"),
-		new EncounterTranslation(Destiny2Raid.DeepStoneCrypt, Destiny2Encounter.DSC_Descent, "dsc_descent", "descent"),
+		new EncounterTranslation(Destiny2Raid.DeepStoneCrypt, Destiny2Encounter.DSC_Descent, "dsc_descent", "descent", "descend", "nuclear"),
 		new EncounterTranslation(Destiny2Raid.DeepStoneCrypt, Destiny2Encounter.DSC_Taniks, "dsc_taniks", "taniks", "boss", "final"),
 
 		// Vow of the Disciple
@@ -47,8 +47,8 @@ public static class RaidEncounterTranslations
 
 	public static Destiny2Encounter GetEncounter(Destiny2Raid raid, string translation)
 	{
-		if (Translations.Any(t => t.Raid == raid && t.Translations.Contains(translation)))
-			return Translations.Single(t => t.Raid == raid && t.Translations.Contains(translation)).Encounter;
+		if (Translations.Any(t => t.Raid == raid && t.Translations.Contains(translation.ToLower())))
+			return Translations.Single(t => t.Raid == raid && t.Translations.Contains(translation.ToLower())).Encounter;
 		return Destiny2Encounter.INVALID;
 	}
 

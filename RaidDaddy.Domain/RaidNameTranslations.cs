@@ -14,7 +14,7 @@ public static class RaidNameTranslations
 	public static Destiny2Raid GetRaid(string translation)
 	{
 		foreach (var raid in Translations)
-			if (raid.Translations.Contains(translation))
+			if (raid.Translations.Contains(translation.ToLower()))
 				return raid.Raid;
 		return Destiny2Raid.INVALID;
 	}
