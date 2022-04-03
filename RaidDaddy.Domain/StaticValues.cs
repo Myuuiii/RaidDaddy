@@ -24,4 +24,5 @@ public static class StaticValues
 	public const string EncounterSet = "Encounter was set to ";
 	public const string InvalidRole = "Invalid role.";
 	public const string RoleSet = "Role was set to ";
+	public const string RaidStarted = "The raid is starting";
 }

@@ -284,4 +284,29 @@ public class RaidModule : ModuleBase<SocketCommandContext>
 		}
 		await ReplyAsync(sb.ToString());
 	}
+
+	/// <summary>
+	/// Will ping all the members in the raid telling them that the raid is starting
+	/// </summary>
+	[Command("start")]
+	public async Task StartCommand()
+	{
+		Guild guild = _guildRepository.GetGuild(Context.Guild.Id);
+		bool raidExists = _raidRepository.RaidExists(guild.Id);
+
+		if (!raidExists)
+		{
+			await ReplyAsync(StaticValues.NoActiveRaid);
+			return;
+		}
+
+		Raid raid = _raidRepository.GetRaid(guild.Id);
+		StringBuilder sb = new StringBuilder();
+		sb.Append("  ");
+		foreach (ulong userId in raid.Raiders)
+		{
+			sb.Append("<@" + userId + "> ");
+		}
+		await ReplyAsync(StaticValues.RaidStarted + sb.ToString(), embed: raid.GetEmbed());
+	}
 }
