@@ -1,4 +1,5 @@
 using System.Text;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using RaidDaddy.Domain;
@@ -250,14 +251,15 @@ public class RaidModule : ModuleBase<SocketCommandContext>
 	public async Task RaidInfo()
 	{
 		Guild guild = _guildRepository.GetGuild(Context.Guild.Id);
-		Raid raid = _raidRepository.GetRaid(guild.Id);
+		bool raidExists = _raidRepository.RaidExists(guild.Id);
 
-		if (!_raidRepository.RaidExists(guild.Id))
+		if (!raidExists)
 		{
 			await ReplyAsync(StaticValues.NoActiveRaid);
 			return;
 		}
 
+		Raid raid = _raidRepository.GetRaid(guild.Id);
 		await ReplyAsync(embed: raid.GetEmbed());
 	}
 

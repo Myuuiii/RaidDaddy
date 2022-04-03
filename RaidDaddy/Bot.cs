@@ -37,7 +37,8 @@ public class Bot
 		_commandService = new CommandService();
 		_client = new DiscordSocketClient(new DiscordSocketConfig
 		{
-			AlwaysDownloadUsers = true
+			AlwaysDownloadUsers = true,
+			GatewayIntents = GatewayIntents.All
 		});
 
 		_handler = new CommandHandler(_client, _config);
