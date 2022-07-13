@@ -37,6 +37,14 @@ public class Bot
 		{
 			_currentWeek = GetWeekNr();
 			_currentWeeklyRaid = (WeeklyRaid)(_currentWeek % Enum.GetValues(typeof(WeeklyRaid)).Length);
+
+			foreach (Guild guild in _guildRepository.GetGuilds())
+			{
+				if (guild.UpdateChannelId != 0)
+				{
+					_client.GetGuild(guild.Id).GetTextChannel(guild.UpdateChannelId).SendMessageAsync($"Weekly raid is now: {_currentWeeklyRaid}");
+				}
+			}
 			_weeklyTimerCheck.Stop();
 			_weeklyTimerCheck.Start();
 		}
