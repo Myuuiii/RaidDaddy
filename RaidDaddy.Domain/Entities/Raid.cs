@@ -61,8 +61,8 @@ public class Raid
 		embed.WithTimestamp(DateTime.Now);
 		embed.AddField("Raid", this.SelectedRaid.Humanize(), true);
 		embed.AddField("Checkpoint", this.SelectedEncounter.Humanize(), true);
-		embed.WithThumbnailUrl("https://cdn.mutedevs.nl/projects/raiddaddy/newRaidIcon.png");
-		embed.WithImageUrl("https://cdn.mutedevs.nl/projects/raiddaddy/clantext.png");
+		embed.WithThumbnailUrl("https://cdn.myuuiii.com/projects/raiddaddy/newRaidIcon.png");
+		embed.WithImageUrl("https://cdn.myuuiii.com/projects/raiddaddy/clantext.png");
 
 		sb.AppendLine($"**Creator**: <@{this.Creator}>" + Environment.NewLine);
 		sb.AppendLine("**Raiders**: " + this.GetMemberCountString());

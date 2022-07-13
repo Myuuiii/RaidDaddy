@@ -23,7 +23,7 @@ public class GuildRepository : IGuildRepository
 
 	public Guild GetGuild(ulong guildId)
 	{
-		return _guilds.Single(g => g.Id == guildId);
+		return _guilds.First(g => g.Id == guildId);
 	}
 
 	public List<Guild> GetGuilds()
@@ -38,7 +38,7 @@ public class GuildRepository : IGuildRepository
 
 	public void RemoveGuild(ulong guild)
 	{
-		_guilds.Remove(_guilds.Single(g => g.Id == guild));
+		_guilds.Remove(_guilds.First(g => g.Id == guild));
 		Save();
 	}
 
@@ -63,7 +63,7 @@ public class GuildRepository : IGuildRepository
 
 	public void UpdateGuild(Guild guild)
 	{
-		_guilds.Remove(_guilds.Single(g => g.Id == guild.Id));
+		_guilds.Remove(_guilds.First(g => g.Id == guild.Id));
 		_guilds.Add(guild);
 		Save();
 	}
