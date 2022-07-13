@@ -77,7 +77,7 @@ public class Bot
 
 	private int GetWeekNr()
 	{
-		DateTime dt = new DateTime(2020, 12, 21);
+		DateTime dt = DateTime.Now;
 		Calendar cal = new CultureInfo("en-US").Calendar;
 		int week = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
 		return week;
