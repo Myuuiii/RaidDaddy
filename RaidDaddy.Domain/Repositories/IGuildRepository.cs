@@ -11,4 +11,5 @@ public interface IGuildRepository
 	void Save();
 
 	void SetRaiderRole(ulong guildId, ulong roleId);
+	void SetRaidUpdateChannel(ulong guildId, ulong channelId);
 }

@@ -16,6 +16,14 @@ public class GuildSettingModule : ModuleBase<SocketCommandContext>
 		this._guildRepository = Bot._guildRepository;
 	}
 
+	[Command("setweeklyraid")]
+	public async Task SetWeeklyRaidCommand()
+	{
+		_guildRepository.SetRaidUpdateChannel(this.Context.Guild.Id, this.Context.Channel.Id);
+		await this.Context.Channel.SendMessageAsync("Raid update channel set.");
+		await this.Context.Channel.SendMessageAsync("CURRENT RAID: " + Bot._currentWeeklyRaid.ToString() + " FOR WEEK " + Bot._currentWeek);
+	}
+
 
 	/// <summary>
 	/// Set some specific settings for the server and the raid

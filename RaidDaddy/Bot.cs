@@ -1,4 +1,6 @@
-﻿using Discord;
+﻿using System.Globalization;
+using System.Timers;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using RaidDaddy.Domain;
@@ -16,12 +18,30 @@ public class Bot
 
 	public static IRaidRepository _raidRepository;
 	public static IGuildRepository _guildRepository;
+	public static System.Timers.Timer _weeklyTimerCheck;
+	public static int _currentWeek;
+	public static WeeklyRaid _currentWeeklyRaid;
 
 	public Bot()
 	{
 		_raidRepository = new RaidRepository();
 		_guildRepository = new GuildRepository();
+		_weeklyTimerCheck = new System.Timers.Timer(3600);
+		_weeklyTimerCheck.Elapsed += _weeklyTimerCheck_Elapsed;
+		_currentWeek = GetWeekNr();
 	}
+
+	private void _weeklyTimerCheck_Elapsed(object sender, ElapsedEventArgs e)
+	{
+		if (_currentWeek != GetWeekNr())
+		{
+			_currentWeek = GetWeekNr();
+			_currentWeeklyRaid = (WeeklyRaid)(_currentWeek % Enum.GetValues(typeof(WeeklyRaid)).Length);
+			_weeklyTimerCheck.Stop();
+			_weeklyTimerCheck.Start();
+		}
+	}
+
 
 	public static void Main(string[] args)
 	{
@@ -53,5 +73,13 @@ public class Bot
 
 		System.Console.WriteLine("Bot online");
 		await Task.Delay(-1);
+	}
+
+	private int GetWeekNr()
+	{
+		DateTime dt = new DateTime(2020, 12, 21);
+		Calendar cal = new CultureInfo("en-US").Calendar;
+		int week = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+		return week;
 	}
 }

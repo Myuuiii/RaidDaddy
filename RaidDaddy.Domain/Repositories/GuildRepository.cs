@@ -54,6 +54,13 @@ public class GuildRepository : IGuildRepository
 		Save();
 	}
 
+	public void SetRaidUpdateChannel(ulong guildId, ulong channelId)
+	{
+		Guild guild = GetGuild(guildId);
+		guild.UpdateChannelId = channelId;
+		Save();
+	}
+
 	public void UpdateGuild(Guild guild)
 	{
 		_guilds.Remove(_guilds.Single(g => g.Id == guild.Id));
