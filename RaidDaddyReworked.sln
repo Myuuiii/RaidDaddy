@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidDaddy", "raidDaddy\RaidDaddy.csproj", "{A618994D-3527-4210-B07D-85623ECC7E84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidDaddy", "RaidDaddy\RaidDaddy.csproj", "{A618994D-3527-4210-B07D-85623ECC7E84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidDaddy.Domain", "RaidDaddy.Domain\RaidDaddy.Domain.csproj", "{8B630FE4-52BF-43ED-B4D8-E1ECD408C503}"
 EndProject
