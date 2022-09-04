@@ -13,6 +13,7 @@ public static class Extensions
 			case Destiny2Raid.DeepStoneCrypt: return "Deep Stone Crypt";
 			case Destiny2Raid.VowOfTheDisciple: return "Vow of the Disciple";
 			case Destiny2Raid.VaultOfGlass: return "Vault of Glass";
+			case Destiny2Raid.KingsFall: return "King's Fall";
 			default: return "Unknown";
 		}
 	}
@@ -67,6 +68,15 @@ public static class Extensions
 			case Destiny2Encounter.VOG_JumpingPuzzle: return "Jumping Puzzle";
 			case Destiny2Encounter.VOG_Gatekeeper: return "Gatekeeper";
 			case Destiny2Encounter.VOG_Atheon: return "Atheon";
+
+			case Destiny2Encounter.KF_DaughtersOfOryx: return "Daughters of Oryx";
+			case Destiny2Encounter.KF_Entrance: return "Entrance";
+			case Destiny2Encounter.KF_Golgoroth: return "Golgoroth";
+			case Destiny2Encounter.KF_JumpingPuzzle: return "Jumping Puzzle";
+			case Destiny2Encounter.KF_Oryx: return "Oryx";
+			case Destiny2Encounter.KF_Relics: return "Relics";
+			case Destiny2Encounter.KF_Totems: return "Totems";
+			case Destiny2Encounter.KF_Warpriest: return "Warpriest";
 
 			case Destiny2Encounter.CLEAN: return "From Start";
 			default: return "Unknown";
