@@ -4,7 +4,7 @@ namespace RaidDaddy.Domain.Repositories;
 
 public class GuildRepository : IGuildRepository
 {
-	private const string fileName = "./guilds.yaml";
+	private const string fileName = "./resource/guilds.yaml";
 	private List<Guild> _guilds;
 
 	public GuildRepository()

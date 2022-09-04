@@ -4,7 +4,7 @@ namespace RaidDaddy.Domain.Repositories;
 
 public class RaidRepository : IRaidRepository
 {
-	private const string fileName = "./raids.yml";
+	private const string fileName = "./resource/raids.yml";
 	private List<Raid> raids = new();
 
 	public RaidRepository()
