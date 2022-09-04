@@ -5,7 +5,7 @@ WORKDIR /app
 # Copy the source code to the build context
 COPY . ./
 RUN dotnet restore
-RUN dotnet publish Charmy -c Release -o out
+RUN dotnet publish RaidDaddy -c Release -o out
 
 # Build Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
