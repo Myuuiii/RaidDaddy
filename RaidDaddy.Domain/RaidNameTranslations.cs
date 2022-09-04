@@ -8,7 +8,8 @@ public static class RaidNameTranslations
 		new RaidTranslation(Destiny2Raid.LastWish, "lw", "wish", "lastwish"),
 		new RaidTranslation(Destiny2Raid.DeepStoneCrypt, "dsc", "crypt", "deepstonecrypt"),
 		new RaidTranslation(Destiny2Raid.VowOfTheDisciple, "votd", "vow", "disciple", "vowofthedisciple"),
-		new RaidTranslation(Destiny2Raid.VaultOfGlass, "vog", "vault", "vaultofglass")
+		new RaidTranslation(Destiny2Raid.VaultOfGlass, "vog", "vault", "vaultofglass"),
+		new RaidTranslation(Destiny2Raid.KingsFall, "kf", "fall", "kingsfall", "king"),
 	};
 
 	public static Destiny2Raid GetRaid(string translation)

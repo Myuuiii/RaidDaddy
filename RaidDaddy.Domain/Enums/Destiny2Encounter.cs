@@ -43,4 +43,14 @@ public enum Destiny2Encounter
 	VOG_JumpingPuzzle,
 	VOG_Gatekeeper,
 	VOG_Atheon,
+
+	// Kings Fall
+	KF_Entrance,
+	KF_Relics,
+	KF_Totems,
+	KF_Warpriest,
+	KF_Golgoroth,
+	KF_JumpingPuzzle,
+	KF_DaughtersOfOryx,
+	KF_Oryx
 }

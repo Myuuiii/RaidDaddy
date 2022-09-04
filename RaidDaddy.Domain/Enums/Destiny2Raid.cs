@@ -7,5 +7,6 @@ public enum Destiny2Raid
 	LastWish,
 	DeepStoneCrypt,
 	VowOfTheDisciple,
-	VaultOfGlass
+	VaultOfGlass,
+	KingsFall
 }

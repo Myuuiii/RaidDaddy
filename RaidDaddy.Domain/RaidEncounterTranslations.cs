@@ -43,6 +43,16 @@ public static class RaidEncounterTranslations
 		new EncounterTranslation(Destiny2Raid.VaultOfGlass, Destiny2Encounter.VOG_JumpingPuzzle, "vog_jumpingpuzzle", "jumpingpuzzle", "jump"),
 		new EncounterTranslation(Destiny2Raid.VaultOfGlass, Destiny2Encounter.VOG_Gatekeeper, "vog_gatekeeper", "gatekeeper"),
 		new EncounterTranslation(Destiny2Raid.VaultOfGlass, Destiny2Encounter.VOG_Atheon, "vog_atheon", "atheon", "boss", "final"),
+
+		// King's Fall
+		new EncounterTranslation(Destiny2Raid.KingsFall, Destiny2Encounter.KF_Entrance, "kf_entrance", "entrance", "opening", "start", "entrance"),
+		new EncounterTranslation(Destiny2Raid.KingsFall, Destiny2Encounter.KF_Relics, "kf_relics", "relics"),
+		new EncounterTranslation(Destiny2Raid.KingsFall, Destiny2Encounter.KF_Totems, "kf_totems", "totems"),
+		new EncounterTranslation(Destiny2Raid.KingsFall, Destiny2Encounter.KF_Warpriest, "kf_warpriest", "warpriest"),
+		new EncounterTranslation(Destiny2Raid.KingsFall, Destiny2Encounter.KF_Golgoroth, "kf_golgoroth", "golgoroth"),
+		new EncounterTranslation(Destiny2Raid.KingsFall, Destiny2Encounter.KF_JumpingPuzzle , "kf_jumpingpuzzle", "jumpingpuzzle", "jump"),
+		new EncounterTranslation(Destiny2Raid.KingsFall, Destiny2Encounter.KF_DaughtersOfOryx, "kf_daughters", "daughters"),
+		new EncounterTranslation(Destiny2Raid.KingsFall, Destiny2Encounter.KF_Oryx, "kf_oryx", "oryx", "boss", "final"),
 	};
 
 	public static Destiny2Encounter GetEncounter(Destiny2Raid raid, string translation)
