@@ -5,6 +5,8 @@ using Discord.Commands;
 using Discord.WebSocket;
 using RaidDaddy.Domain;
 using RaidDaddy.Domain.Repositories;
+using Serilog;
+using Serilog.Core;
 using YamlDotNet.Serialization;
 
 namespace RaidDaddy;
@@ -21,6 +23,7 @@ public class Bot
 	public static System.Timers.Timer _weeklyTimerCheck;
 	public static int _currentWeek;
 	public static WeeklyRaid _currentWeeklyRaid;
+	public static Logger _logger;
 
 	public Bot()
 	{
@@ -28,6 +31,10 @@ public class Bot
 		_guildRepository = new GuildRepository();
 		_weeklyTimerCheck = new System.Timers.Timer(3600);
 		_weeklyTimerCheck.Elapsed += _weeklyTimerCheck_Elapsed;
+		_logger = new LoggerConfiguration()
+			.MinimumLevel.Debug()
+			.WriteTo.Console()
+			.CreateLogger();
 		_currentWeek = GetWeekNr();
 	}
 
@@ -59,27 +66,40 @@ public class Bot
 	public async Task MainAsync()
 	{
 		if (!File.Exists(BotConfiguration._fileName))
+		{
 			File.WriteAllText(BotConfiguration._fileName, new Serializer().Serialize(new BotConfiguration()));
+			_logger.Information("Created a new configuration file");
+		}
 		_config = new Deserializer().Deserialize<BotConfiguration>((string)File.ReadAllText(BotConfiguration._fileName));
+		_logger.Information("Loaded configuration");
 
 		_commandService = new CommandService();
+		_logger.Information("Created command service");
+
 		_client = new DiscordSocketClient(new DiscordSocketConfig
 		{
 			AlwaysDownloadUsers = true,
 			GatewayIntents = GatewayIntents.All
 		});
+		_logger.Information("Created discord client");
 
 		_handler = new CommandHandler(_client, _config);
+		_logger.Information("Created command handler");
 
 		if (string.IsNullOrEmpty(_config.Token))
 		{
+			_logger.Fatal("Token is empty, please fill it in the config file");
 			throw new Exception("Token is not set!");
 		}
 
+		_logger.Information("Logging in...");
 		await _client.LoginAsync(TokenType.Bot, _config.Token);
+		_logger.Information("Logged in");
+		_logger.Information("Starting...");
 		await _client.StartAsync();
+		_logger.Information("Started");
 
-		System.Console.WriteLine("Bot online");
+		_logger.Information("Bot is online");
 		await Task.Delay(-1);
 	}
 
