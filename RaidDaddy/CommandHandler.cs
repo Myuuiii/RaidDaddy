@@ -17,8 +17,8 @@ namespace RaidDaddy
 
 		public CommandHandler(DiscordSocketClient client, BotConfiguration config)
 		{
-			this._guildRepository = Bot._guildRepository;
-			this._raidRepository = Bot._raidRepository;
+			this._guildRepository = Bot.GuildRepository;
+			this._raidRepository = Bot.RaidRepository;
 
 			this._client = client;
 			this._config = config;

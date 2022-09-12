@@ -14,47 +14,41 @@ namespace RaidDaddy;
 public class Bot
 {
 	private static DiscordSocketClient _client;
-	public static BotConfiguration _config;
+	public static BotConfiguration Config;
 	private CommandService _commandService;
 	private CommandHandler _handler;
 
-	public static IRaidRepository _raidRepository;
-	public static IGuildRepository _guildRepository;
-	public static System.Timers.Timer _weeklyTimerCheck;
-	public static int _currentWeek;
-	public static WeeklyRaid _currentWeeklyRaid;
-	public static Logger _logger;
+	public static IRaidRepository RaidRepository;
+	public static IGuildRepository GuildRepository;
+	private static System.Timers.Timer _weeklyTimerCheck;
+	public static int CurrentWeek;
+	public static WeeklyRaid CurrentWeeklyRaid;
+	private static Logger _logger;
 
 	public Bot()
 	{
-		_raidRepository = new RaidRepository();
-		_guildRepository = new GuildRepository();
+		RaidRepository = new RaidRepository();
+		GuildRepository = new GuildRepository();
 		_weeklyTimerCheck = new System.Timers.Timer(3600);
 		_weeklyTimerCheck.Elapsed += _weeklyTimerCheck_Elapsed;
 		_logger = new LoggerConfiguration()
 			.MinimumLevel.Debug()
 			.WriteTo.Console()
 			.CreateLogger();
-		_currentWeek = GetWeekNr();
+		CurrentWeek = GetWeekNr();
 	}
 
 	private void _weeklyTimerCheck_Elapsed(object sender, ElapsedEventArgs e)
 	{
-		if (_currentWeek != GetWeekNr())
-		{
-			_currentWeek = GetWeekNr();
-			_currentWeeklyRaid = (WeeklyRaid)(_currentWeek % Enum.GetValues(typeof(WeeklyRaid)).Length);
+		if (CurrentWeek == GetWeekNr()) return;
+		CurrentWeek = GetWeekNr();
+		CurrentWeeklyRaid = (WeeklyRaid)(CurrentWeek % Enum.GetValues(typeof(WeeklyRaid)).Length);
 
-			foreach (Guild guild in _guildRepository.GetGuilds())
-			{
-				if (guild.UpdateChannelId != 0)
-				{
-					_client.GetGuild(guild.Id).GetTextChannel(guild.UpdateChannelId).SendMessageAsync($"Weekly raid is now: {_currentWeeklyRaid}");
-				}
-			}
-			_weeklyTimerCheck.Stop();
-			_weeklyTimerCheck.Start();
-		}
+		foreach (Guild guild in GuildRepository.GetGuilds().Where(guild => guild.UpdateChannelId != 0))
+			_client.GetGuild(guild.Id).GetTextChannel(guild.UpdateChannelId)
+				.SendMessageAsync($"Weekly raid is now: {CurrentWeeklyRaid}");
+		_weeklyTimerCheck.Stop();
+		_weeklyTimerCheck.Start();
 	}
 
 
@@ -63,14 +57,14 @@ public class Bot
 		new Bot().MainAsync().GetAwaiter().GetResult();
 	}
 
-	public async Task MainAsync()
+	private async Task MainAsync()
 	{
 		if (!File.Exists(BotConfiguration._fileName))
 		{
-			File.WriteAllText(BotConfiguration._fileName, new Serializer().Serialize(new BotConfiguration()));
+			await File.WriteAllTextAsync(BotConfiguration._fileName, new Serializer().Serialize(new BotConfiguration()));
 			_logger.Information("Created a new configuration file");
 		}
-		_config = new Deserializer().Deserialize<BotConfiguration>((string)File.ReadAllText(BotConfiguration._fileName));
+		Config = new Deserializer().Deserialize<BotConfiguration>(await File.ReadAllTextAsync(BotConfiguration._fileName));
 		_logger.Information("Loaded configuration");
 
 		_commandService = new CommandService();
@@ -83,17 +77,17 @@ public class Bot
 		});
 		_logger.Information("Created discord client");
 
-		_handler = new CommandHandler(_client, _config);
+		_handler = new CommandHandler(_client, Config);
 		_logger.Information("Created command handler");
 
-		if (string.IsNullOrEmpty(_config.Token))
+		if (string.IsNullOrEmpty(Config.Token))
 		{
 			_logger.Fatal("Token is empty, please fill it in the config file");
 			throw new Exception("Token is not set!");
 		}
 
 		_logger.Information("Logging in...");
-		await _client.LoginAsync(TokenType.Bot, _config.Token);
+		await _client.LoginAsync(TokenType.Bot, Config.Token);
 		_logger.Information("Logged in");
 		_logger.Information("Starting...");
 		await _client.StartAsync();
@@ -103,7 +97,7 @@ public class Bot
 		await Task.Delay(-1);
 	}
 
-	private int GetWeekNr()
+	private static int GetWeekNr()
 	{
 		DateTime dt = DateTime.Now;
 		Calendar cal = new CultureInfo("en-US").Calendar;

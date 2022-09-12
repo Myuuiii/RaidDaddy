@@ -17,4 +17,10 @@
     <ProjectReference Include="..\RaidDaddy.Domain\RaidDaddy.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="resource\config.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
